@@ -1,24 +1,28 @@
 # To-Do List
 
-Aplicativo simples de lista de tarefas, desenvolvido com **HTML**, **CSS** e **JavaScript puro**.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+Aplicação de lista de tarefas desenvolvida com **HTML**, **CSS** e **JavaScript puro**, sem o uso de frameworks ou bibliotecas externas.
 
 ---
 
 ## Objetivo
 
-Demonstrar, em um projeto pequeno e funcional, como construir uma aplicação web interativa do zero — sem frameworks — exercitando os principais fundamentos do front-end.
+Demonstrar, em um projeto pequeno e funcional, como construir uma aplicação web interativa do zero, exercitando os principais fundamentos do desenvolvimento front-end. O projeto foi pensado para servir de base prática a conceitos discutidos em aula, como manipulação do DOM, persistência de dados no cliente e organização de código.
 
 ---
 
 ## Funcionalidades
 
-- Adicionar tarefas com nível de prioridade (Baixa, Média, Alta)
-- Editar e excluir tarefas existentes
-- Marcar tarefas como concluídas
-- Indicador visual colorido por prioridade
-- Persistência local: as tarefas continuam salvas após recarregar a página
+- Adição de tarefas com nível de prioridade (Baixa, Média, Alta)
+- Edição e exclusão de tarefas existentes
+- Marcação de tarefas como concluídas
+- Indicador visual diferenciado por prioridade
+- Persistência local: as tarefas permanecem salvas após o recarregamento da página
 - Atalhos de teclado: **Enter** para adicionar, **Esc** para cancelar uma edição
-- Resumo de tarefas exibido na página inicial
+- Resumo das tarefas exibido na página inicial
 
 ---
 
@@ -28,13 +32,13 @@ Demonstrar, em um projeto pequeno e funcional, como construir uma aplicação we
 | -------------- | ------------------------------------------------------------------------------------------------- |
 | **HTML**       | Estrutura semântica, formulários, acessibilidade (`aria-label`, `label`)                          |
 | **CSS**        | Variáveis CSS, Flexbox, responsividade, gradientes, transições, `backdrop-filter`                 |
-| **JavaScript** | Manipulação do DOM, eventos, template strings, `localStorage`, prevenção de XSS com `textContent` |
+| **JavaScript** | Manipulação do DOM, tratamento de eventos, template strings, `localStorage`, prevenção de XSS com `textContent` |
 
 ---
 
 ## Paleta de cores
 
-As cores são definidas como variáveis CSS em `:root`, o que facilita a manutenção e a consistência visual em todo o projeto.
+As cores são definidas como variáveis CSS em `:root`, o que facilita a manutenção e garante consistência visual em todo o projeto.
 
 **Marca**
 
@@ -76,67 +80,73 @@ As cores são definidas como variáveis CSS em `:root`, o que facilita a manuten
 
 ```
 to-do-list/
-├── index.html          ← página inicial (landing)
+├── index.html         # página inicial (landing)
 ├── README.md
 ├── css/
 │   ├── index.css
 │   └── list.css
-├── js/
-│   └── list.js         ← lógica da lista
-└── html/
-    └── list.html       ← página da lista de tarefas
+├── html/
+│   └── list.html      # página da lista de tarefas
+└── js/
+    └── list.js        # lógica da lista
 ```
 
 ---
 
 ## Como executar
 
-Não há dependências nem build. Basta abrir o `index.html` no navegador.
+O projeto não possui dependências nem etapa de build. Basta abrir o arquivo `index.html` no navegador.
 
-**Opção 1 — duplo clique:** abra `index.html` direto no navegador.
+**Opção 1 — Abertura direta:** clique duas vezes sobre o `index.html` para abri-lo no navegador padrão.
 
-**Opção 2 — servidor local (recomendado):** com a extensão _Live Server_ do VS Code, clique com o botão direito em `index.html` → _Open with Live Server_.
+**Opção 2 — Servidor local (recomendado):** utilizando a extensão *Live Server* no Visual Studio Code, clique com o botão direito sobre `index.html` e selecione *Open with Live Server*. Essa opção é preferível pois habilita o recarregamento automático e simula o comportamento de um servidor web real.
 
 ---
 
-## Detalhes de implementação que valem estudar
+## Detalhes de implementação
 
-### 1. Por que `textContent` em vez de `innerHTML`?
+Os pontos a seguir destacam decisões técnicas que merecem atenção durante o estudo do código.
 
-Ao inserir texto digitado pelo usuário, usamos `textContent`. Isso impede que entradas como `<script>alert('XSS')</script>` sejam interpretadas como HTML — uma vulnerabilidade clássica chamada **Cross-Site Scripting (XSS)**.
+### 1. Uso de `textContent` em vez de `innerHTML`
 
-### 2. `localStorage`
+Para inserir conteúdo digitado pelo usuário, utilizamos `textContent` em vez de `innerHTML`. Essa escolha impede que entradas como `<script>alert('XSS')</script>` sejam interpretadas como HTML, prevenindo uma vulnerabilidade clássica conhecida como **Cross-Site Scripting (XSS)**.
 
-Os dados ficam salvos no próprio navegador, em formato de string JSON. Para guardar objetos usamos `JSON.stringify` e para ler de volta `JSON.parse`.
+### 2. Persistência com `localStorage`
 
-### 3. Atributos `data-*`
+Os dados são armazenados no próprio navegador em formato de string JSON. A conversão é feita com `JSON.stringify` ao salvar e `JSON.parse` ao recuperar os dados. Vale destacar que o `localStorage` é específico do navegador e do domínio: ao acessar a aplicação em outro dispositivo ou navegador, os dados não estarão disponíveis.
 
-A cor do indicador de prioridade é definida no CSS através de um seletor de atributo:
+### 3. Atributos `data-*` para estilização dinâmica
+
+A cor do indicador de prioridade é definida no CSS por meio de seletores de atributo, eliminando a necessidade de classes condicionais no JavaScript:
 
 ```css
 .prioridade[data-nivel="Alta"]::before {
-  background: red;
+  background: var(--danger);
 }
 ```
 
-No JS, basta atribuir `elemento.dataset.nivel = "Alta"`.
+No JavaScript, basta atribuir o valor diretamente ao dataset do elemento:
+
+```js
+elemento.dataset.nivel = "Alta";
+```
 
 ---
 
 ## Desafios propostos
 
-Para os alunos que quiserem ir além:
+Sugestões para os alunos que quiserem expandir o projeto:
 
-1. **Filtrar** as tarefas por status (todas / pendentes / concluídas)
-2. **Ordenar** automaticamente por prioridade (Alta → Média → Baixa)
-3. Adicionar **data de criação** em cada tarefa
-4. Permitir **arrastar e soltar** (drag-and-drop) para reordenar
-5. Implementar **modo claro / escuro**
-6. Exportar/importar a lista como arquivo **JSON**
-7. Substituir o `localStorage` por uma **API REST** (estudo futuro)
+1. Implementar **filtros** por status (todas, pendentes, concluídas)
+2. Adicionar **ordenação automática** por prioridade (Alta → Média → Baixa)
+3. Incluir **data e hora de criação** em cada tarefa
+4. Permitir **arrastar e soltar** (drag-and-drop) para reordenar as tarefas
+5. Implementar alternância entre **modo claro e escuro**
+6. Adicionar funcionalidade de **exportar e importar** a lista em formato JSON
+7. Substituir o `localStorage` por uma integração com **API REST** (conteúdo futuro)
 
 ---
 
 ## Licença
 
-Material didático de uso livre para fins educacionais.
+Material didático de uso livre para fins educacionais, mantendo os créditos da autora.
