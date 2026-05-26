@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href=".../to-do-list/css/list.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <a href="../index.html" class="voltar" aria-label="Voltar para a página inicial">
+      ← Voltar
+    </a>
+
+    <h1>Lista de Tarefas</h1>
+
+    <div class="form-tarefa">
+
+      <label for="tarefaInput" class="sr-only">Descrição da tarefa</label>
+      <input
+        type="text"
+        id="tarefaInput"
+        placeholder="Digite uma tarefa"
+        autocomplete="off"
+      >
+
+      <label for="prioridade" class="sr-only">Prioridade da tarefa</label>
+      <select id="prioridade">
+        <option value="Baixa">Baixa</option>
+        <option value="Média">Média</option>
+        <option value="Alta">Alta</option>
+      </select>
+
+      <button type="button" id="btnAdicionar">
+        Adicionar
+      </button>
+
+    </div>
+
+    <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+    <ul id="listaTarefas" aria-label="Lista de tarefas"></ul>
+
+  </div>
+
+  <script src="../js/list.js"></script>
+</body>
+</html>
